@@ -1611,7 +1611,7 @@ namespace TeknoParrotUi.Common.InputListening
             InputCode.AnalogBytes[analogIndex] = value;
         }
 
-        private void HandleRawInputGun(JoystickButtons joystickButton, int inputX, int inputY, bool moveAbsolute)
+        private void HandleRawInputGun(JoystickButtons joystickButton, double inputX, double inputY, bool moveAbsolute)
         {
             // Ignore when alt+tabbed
             if (!_windowFocus)
@@ -1635,14 +1635,14 @@ namespace TeknoParrotUi.Common.InputListening
                         // Canvas publishers use physical pixels. Map normalized RawInput
                         // coordinates into that same space without DPI-sensitive WPF metrics.
                         inputX = canvasInfo.windowLocationX +
-                            (int)((long)inputX * canvasInfo.windowWidth / 0xFFFF);
+                            inputX * canvasInfo.windowWidth / 0xFFFF;
                         inputY = canvasInfo.windowLocationY +
-                            (int)((long)inputY * canvasInfo.windowHeight / 0xFFFF);
+                            inputY * canvasInfo.windowHeight / 0xFFFF;
                     }
                     else
                     {
-                        inputX = (int)((float)inputX / (float)0xFFFF * SystemParameters.PrimaryScreenWidth);
-                        inputY = (int)((float)inputY / (float)0xFFFF * SystemParameters.PrimaryScreenHeight);
+                        inputX = inputX / 0xFFFF * SystemParameters.PrimaryScreenWidth;
+                        inputY = inputY / 0xFFFF * SystemParameters.PrimaryScreenHeight;
                     }
                 }
 
